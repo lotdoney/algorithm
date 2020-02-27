@@ -121,6 +121,7 @@ int delete_set(int sqList[], int &length, int p, int &s)
 	return 1;
 }
 */
+/*
 //任务三 链表
 #include "stdio.h"
 #include "windows.h"
@@ -299,7 +300,7 @@ for (int i = 0, j = length - 1; i < j; i++, j--)
 	temp = a[i];
 	a[i] = a[j];
 	a[j] = temp;
-	/* code */
+	 code 
 }
 
 //逆置链表
@@ -573,4 +574,4 @@ void partition(int a[], int n，int k)
 	a[i] = temp;
 }
 
-
+*/

@@ -418,3 +418,159 @@ void merge(int a[], int m, int b[], int n, int c[])
 		c[k++] = b[j++];
 	}
 }
+
+//链表归并
+void merge(LNode *A, LNode *B, LNode *&C)
+{
+	LNode *p, *q, *r;
+	p = A->next;
+	q = B->next;
+	C = A;
+	C->next = NULL;
+	r = C;
+	free(B);
+	while (p->next = !NULL&&q->next != NULL)
+	{
+		if (p->data < q->data)
+		{
+			r->next = p;
+			r = r->next;
+			p = p->next;
+		}
+		else
+		{
+			r - next = q;
+			r = r->next;
+			q = q->next;
+		}
+	}
+	while (p != NULL)
+	{
+		r->next = p;
+		r = r->next;
+		p = p->next;
+	}
+	while (q != NULL)
+	{
+		r->next = q;
+		r = r->next;
+		q = q->next;
+	}
+	//这样也可以，但是太麻烦，注意链表就是抓到头就行了
+	if (p != NULL) r->next = p;
+	if (q != NULL) r->next = q;
+}
+
+//若想归并后的表顺序想法使用头插法
+p->next = C->next;
+C->next = p;
+p = p->next;
+//使用头插法已经无法使后面的一次并入，需要改成while
+while (p != NULL)
+{
+	p->next = C->next;
+	C->next = p;
+	p = p->next;
+}
+while (q != NULL)
+{
+	q->next = C->next;
+	C->next = q;
+	q = q->next;
+}
+
+//划分,以某个元素为标志，左右不一样，三种题目
+//第一种：2,-1,-9,-3,5,6,-1;顺序表以2为划分，左边比2小，右边比2大
+//使用时间复杂度尽量低的方法，i在数组的第一个，j在数组的第二个
+//左移j，同时判断，一旦j所在的数值小于2，赋值到i所在的位置，i++
+//右移i，直到遇到比2大的数字，停止，把i所指的数赋值到j上面
+//直到ij相遇，或i>=j，a[i]=temp(2)结束。
+void partition(int a[], int n)
+{
+	int temp = a[0];
+	int i = 0, j = n - 1;
+	while (i < j)
+	{
+		while (i < j && a[j] >= temp)
+		{
+			j--;
+		}
+		if (i < j)
+		{
+			a[i] = a[j];
+			i++;
+		}
+		while (i < j && a[i] < temp)
+		{
+			i++;
+		}
+		if (i < j)
+		{
+			a[j] = a[i];
+			j--;
+		}
+	}
+	a[i] = temp;
+}
+//假设此时，比较的值不是temp，是自己指定的，comp,只需要改三处
+void partition(int a[], int n, int comp)
+{
+	int temp = a[0];
+	int i = 0, j = n - 1;
+	while (i < j)
+	{
+		while (i < j && a[j] >= comp)
+		{
+			j--;
+		}
+		if (i < j)
+		{
+			a[i] = a[j];
+			i++;
+		}
+		while (i < j && a[i] < comp)
+		{
+			i++;
+		}
+		if (i < j)
+		{
+			a[j] = a[i];
+			j--;
+		}
+	}
+	a[i] = temp;
+}
+//比较的值是数字的任意一个值，输入数字下表k，默认k在0-n-1范围呢
+void partition(int a[], int n，int k)
+{
+	int temp;
+	int i = 0, j = n - 1;
+	temp = a[i];//换到首个元素
+	a[i] = a[k];
+	a[k] = temp;
+	temp = a[i];
+	while (i < j)
+	{
+		while (i < j && a[j] >= temp)
+		{
+			j--;
+		}
+		if (i < j)
+		{
+			a[i] = a[j];
+			i++;
+		}
+		while (i < j && a[i] < temp)
+		{
+			i++;
+		}
+		if (i < j)
+		{
+			a[j] = a[i];
+			j--;
+		}
+	}
+	a[i] = temp;
+}
+
+

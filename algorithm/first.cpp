@@ -62,7 +62,7 @@ int main()
 */
 
 //例题2 长度为30以内的数字输入，十进制转化为二进制，再逆序排序转化为十进制 清华大学机试题
-
+/*
 #include <iostream>
 #include <vector>
 #include <string>
@@ -147,6 +147,48 @@ int main()
 		cout << answer << endl;
 
 	}
-	
 
 }
+*/
+
+//例题3 最大公约数 最小公倍数
+
+#include<iostream>
+#include<cstdio>
+
+using namespace std;
+
+//辗转相除法，原理：a和b的最大公约数等于b和a%b的最大公约数
+/*
+int GCD(int a, int b)
+{
+	int r = 0;
+	while (b)
+	{
+		r = a % b;
+		a = b;
+		b = r;
+	}
+	return a;
+}
+
+//递归的
+int GCD(int a, int b) 
+{
+	if (b == 0) return a;
+	else return GCD(b, a%b);
+}
+
+int main()
+{
+	int a, b;
+	while (scanf_s("%d%d", &a, &b) != EOF)
+	{
+		printf_s("%d\n", GCD(a, b));//最大公约数
+		printf_s("%d\n", a*b / GCD(a, b));//最小公倍数
+	}
+	return 0;
+}
+*/
+
+//例题4 质数

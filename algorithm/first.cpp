@@ -191,4 +191,117 @@ int main()
 }
 */
 
-//例题4 质数
+//例题4 质数 ,输入一个数，输出1到这个数之间所有的质数
+//方法一，质数判断之后在用for循环遍历出1-n之间的质数
+/*
+#include<iostream>
+#include<cstdio>
+#include<cmath>
+
+using namespace std;
+
+bool Judge(int x)
+{
+	int count = 0;
+	int bound = sqrt(x);
+	if (x < 2) return false;
+	else if (x==2) return true;
+	else
+	{
+		if (x % 2 == 0) return false;
+		else
+		{
+			for (int i = 3; i <=bound; i += 2)
+			{
+				if (x%i == 0)
+				{
+					count++;
+				}
+			}
+			if (count == 0) return true;
+			else return false;
+		}
+	}
+}
+
+int main()
+{
+	int n;
+	while (scanf_s("%d", &n) != EOF)
+	{
+		for (int i = 2; i < n; i++)
+		{
+			int a = Judge(i);
+			if (a == 1 && i%10==1) printf_s("%d\n", i);
+		}
+
+	}
+
+}
+*/
+//方法二 质数筛选法
+/*
+#include<iostream>
+#include<cstdio>
+#include<cmath>
+#include <vector>
+#define  maxn 10001
+using namespace std;
+
+vector<int> prime;
+
+bool signal[maxn];
+
+int  Initial() 
+{
+	for (int i=0;i<maxn;i++)
+	{
+		signal[i] = true;
+	}
+
+	signal[0] = false;
+	signal[1] = false;
+
+	for (int i=2;i<maxn;i++)
+	{
+		if (signal==0)
+		{
+			continue;
+		}
+		else
+		{	
+		prime.push_back(i);
+		for (int j=i*i;j<maxn;j+=i)
+		{
+			signal[i] = false;
+		}
+		}
+	}
+	return 0;
+}
+
+int main()
+{
+	Initial();
+	int n;
+	
+	while (scanf_s("%d",&n)!=EOF) 
+	{
+		int count = 0;
+		for (int i=2;i<prime.size()&&prime[i]<n;i++)
+		{
+			if (prime[i]%10==1)
+			{
+				printf_s("%d ", prime[i]);
+				count++;
+			}
+		}
+		if (count==0)
+		{
+			printf_s("%d", -1);
+		}
+	}
+	return 0;
+}
+*/
+

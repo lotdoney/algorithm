@@ -468,7 +468,7 @@ int main()
 */
 
 //例题6 叠框问题 地址杭电oj 题号2074
-
+/*
 #include<iostream>
 #include<cstdio>
 #include<windows.h>
@@ -484,11 +484,11 @@ int main()
 	while (scanf_s("%d%c%c",&n,&a,&b)!=EOF)
 	{
 
-		for (int i=0;i<n/2;i++)
+		for (int i=0;i<=n/2;i++)
 		{
 			int j = n - i - 1;
 			int length = n - 2 * i;
-			char c;
+			char c='0';
 			if ((n/2-i)%2==0)
 			{
 				c = a;
@@ -501,6 +501,13 @@ int main()
 				matrix[j][j -k] = c;
 				matrix[j - k][j] = c;
 			}
+		}
+		if (n!=1)
+		{
+			matrix[0][0] = ' ';
+			matrix[0][n - 1] = ' ';
+			matrix[n - 1][0] = ' ';
+			matrix[n - 1][n - 1] = ' ';
 		}
 
 		for (int i=0;i<n;i++)
@@ -516,3 +523,363 @@ int main()
 	
 	return 0;
 }
+*/
+
+//例题7 日期 输入年月日 ,计算该天是本年的第几天 这类问题的关键是在于闰年(二月)的问题
+/*
+#include<iostream>
+#include <cstdio>
+#include <windows.h>
+using namespace std;
+
+int daytab [2][13]= {
+	{0,31,28,31,30,31,30,31,31,30,31,30,31},
+	{0,31,29,31,30,31,30,31,31,30,31,30,31}
+};
+
+bool Judge(int year) {
+	return(year % 4 == 0 && year % 100 != 0) || (year % 400 == 0);
+}
+int  Judgeday(int year) {
+	if (Judge(year))
+	{
+		return 366;
+	}
+	else  return 365;
+}
+
+int main() 
+{
+	int count;
+	scanf_s("%d", &count);
+	int year, month, day,num;
+
+	while (count--)
+	{
+		scanf_s("%d%d%d%d", &year, &month, &day, &num);
+		//算出当前日期的总天数
+		int row = Judge(year);
+		
+		for (int i=0;i<month;i++)
+		{
+			num += daytab[row][i];
+		}
+		num += day;
+		//再反求出年份
+		while(num>Judgeday(year))
+		{
+			num -= Judgeday(year);
+			year++;
+		}
+		//再反求出月份
+		month = 0;
+		int row_1 = Judge(year);
+	
+		int i = 0;
+		while (num>daytab[row_1][i])
+		{
+			num -=daytab[row_1][i];
+			i++;
+			month++;
+		}
+		
+
+		day = num;
+
+		printf_s("%04d-%02d-%02d\n", year, month, day);
+		
+
+	}
+	system("pause");
+	return 0;
+
+}
+*/
+
+//排序  调用sort函数
+/*
+#include <iostream>
+#include <cstdio>
+#include <algorithm>
+#include <string> //输入string的时候一定使用VS一定要写这个
+
+using namespace std;
+
+struct Student
+{
+	string name;
+	int num;
+	int score;
+};
+
+bool CompareDes(Student x, Student y) {
+	if (x.score == y.score) {
+		return x.num < y.num;
+	}
+	else {
+		return x.score > y.score;
+	}
+}
+
+bool CompareAsc(Student x, Student y) {
+	if (x.score == y.score) {
+		return x.num > y.num;
+	}
+	else {
+		return x.score > y.score;
+	}
+}
+
+int main() {
+	int n, way;
+	while (scanf_s("%d%d",&n,&way)!=EOF){
+		Student arr[100];
+		
+		for (int i=0;i<n;i++)
+		{
+			cin >> arr[i].name>>arr[i].score  ;
+			arr[i].num = i;
+		}
+		if (way==0)
+		{
+			sort(arr, arr + n, CompareDes);
+		}
+		else sort(arr, arr + n, CompareAsc);
+		
+		for (int i=0;i<n;i++)
+		{
+			cout << arr[i].name << arr[i].score << endl;
+		}
+	}
+	return 0;
+}
+*/
+
+//排序 sort函数多种编写方法
+/*
+#include <iostream>
+#include <cstdio>
+#include <algorithm>
+using namespace std;
+
+int  arr[10];
+
+
+bool Compare(int x, int y) {
+	
+	 if (x%2==1&&y%2==1)
+	{
+		return x > y;
+	}
+	else if(x%2==0&&y%2==0)
+	{
+		return x < y;
+	}
+	else return x % 2 > x % 2;
+
+}
+
+
+int main() {
+
+	while (scanf_s("%d", &arr[0]) != EOF)
+	{
+		for (int i = 1; i < 10; i++) {
+			scanf_s("%d", &arr[i]);
+		}
+
+		sort(arr, arr + 10, Compare);
+
+
+	
+
+	for (int i = 0; i < 10; i++)
+	{
+		cout << arr[i] << ' ';
+	}
+	putchar('\n');
+
+	}
+	return 0;
+}
+*/
+
+//排序 线性排序
+/*
+#include <iostream>
+#include <cstdio>
+#include <cstring>
+
+const int MAXN = 1000010;
+const int RANGE = 500000;
+
+using namespace std;
+
+
+int arr[MAXN];
+int num[MAXN];
+int main() {
+	int n, m;
+	while (scanf_s("%d%d",&n,&m))
+	{
+		memset(num, 0, sizeof(num));
+		memset(arr, 0, sizeof(arr));
+		for (int i=0;i<n;i++)
+		{
+			scanf_s("%d", &arr[i]);
+			num[arr[i] + RANGE]++;
+		}
+		int index = 0;
+		for (int i=0;i<MAXN;i++)
+		{
+			while (num[i]--)
+			{
+				arr[index++] = i - RANGE;
+			}
+		}
+
+		for (int i=n-1;i>=m-n;i--)
+		{
+			if (i=m-n)
+			{
+				printf_s("%d\n", arr[i]);
+			}
+			else printf_s("%d ", arr[i]);
+		}
+
+		
+
+	}
+
+	return 0;
+
+}
+*/
+
+//排序 归并排序
+/*
+#include <iostream>
+#include <cstdio>
+#include <cstring>
+
+using namespace std;
+
+int arr[100] = {0};
+int temp[100] = {0};
+
+int num = 0;
+void Combine( int left, int middle, int right) {
+
+	int i = left;
+	int j = middle + 1;
+	int t = 0;
+	while (i<=middle&&j<=right)
+	{
+		if (arr[i]<=arr[j])
+		{
+			temp[t++] = arr[i++];
+		}
+		else
+		{
+			num += (middle - i + 1);
+			temp[t++] = arr[j++];
+		}
+					
+	}
+
+	while (i<=middle)
+	{
+		temp[t++] = arr[i++];
+	}
+	while (j<=right)
+	{
+		temp[t++] = arr[j++];
+	}
+	t = 0;
+	while (left<=right)
+	{
+		arr[left++] = temp[t++];
+	}
+	
+		
+}
+
+
+void MergeSort(int left,int right) {
+	
+	if (left<right)
+	{
+		int middle = (left + (right - left) / 2);//使用之处理方式就不会溢出，两数相加时
+		MergeSort( left, middle);
+		MergeSort( middle+1, right);
+		Combine(left, middle, right);
+	}
+}
+
+int main() {
+
+	int n;
+	while (scanf_s("%d",&n)!=EOF)
+	{
+	//	memset(arr, 0, sizeof(arr));
+	//	memset(temp, 0, sizeof(temp));
+		for (int i = 0; i < n;i++) {
+			scanf_s("%d", &arr[i]);
+		}
+		MergeSort(0, n-1);
+
+		for (int i=0;i<n;i++)
+		{
+			printf_s("%d ", arr[i]);
+		}
+		printf_s("%d", num);
+	}
+
+
+
+	return 0;
+}
+*/
+
+// 查找——lower_bound 大于等于要找数值的第一个位置 ,北邮机试——查找
+/*
+#include<iostream>
+#include<cstdio>
+#include<algorithm>
+
+
+using namespace std;
+
+
+
+int main() {
+	int n,m;
+	int arr[100];
+	int target;
+	while (scanf_s("%d",&n)!=EOF)
+	{
+		for (int i=0;i<n;i++)
+		{
+			scanf_s("%d", &arr[i]);
+		}
+		
+		sort(arr, arr + n);
+		scanf_s("%d", &m);
+		for (int i=0;i<m;i++)
+		{
+			scanf_s("%d", &target);
+			int flag = lower_bound(arr, arr + n, target) - arr;//lower_bound 返回的是地址，所以需要减去arr的地址，才能得到下班
+			if (flag!=n&&arr[flag]==target)
+			{
+				printf_s("yes\n");
+			}
+			else printf_s("no\n");
+		}
+		
+		
+	}
+
+	return 0;
+
+}
+*/

@@ -883,3 +883,428 @@ int main() {
 
 }
 */
+
+//字符串的加密	北京大学试题
+/*
+#include <iostream>
+#include <cstdio>
+#include <string>
+
+using namespace  std;
+
+int main() {
+	string str;
+	while (getline(cin, str)){//使用getline不会遇到空格就结束，遇到回车才结束
+		
+		if (str=="ENDOFINPUT")
+		{
+			break;
+		}
+
+		getline(cin, str);
+		for (int i=0;i<str.size();i++)
+		{
+			if ('A'<=str[i]&&str[i]<='Z'){
+				str[i] = (str[i] - 'A' - 5 + 26) % 26 + 'A';
+			}
+		}
+		
+		cout << str << endl;
+		getline(cin, str);
+
+	}
+
+
+	return 0;
+}
+*/
+
+
+//递归与分治
+/*
+#include <iostream>
+#include <cstdio>
+
+using namespace std;
+
+long long Factor(int n) {
+	if (n==0){
+		return 1;
+	}
+	else return n*Factor(n - 1);
+}
+
+int main() {
+	int n;
+	long long k = 0;
+	while (scanf_s("%d",&n)!=EOF){
+		k = Factor(n);
+		printf_s("%lld\n", k);
+
+	}
+	return 0;
+}
+*/
+//递归之逆序
+/*
+#include <iostream>
+#include <cstdio>
+#include <windows.h>
+using namespace std;
+
+void print() {
+	char a;
+	scanf_s("%c", &a);
+	if (a != '#') print();
+	if (a != '#') printf_s("%c",a);
+}
+
+int main() {
+
+	print();
+	system("pause");
+	return 0;
+}
+*/
+//递归之汉诺塔
+/*
+#include <iostream>
+#include <cstdio>
+
+using namespace std;
+
+
+
+int move(int  n, char x, char y) {
+	if (x!=' '&&y!=' '){
+	printf_s("disk is %d :from %c to %c\n", n, x, y);
+	}
+	return 0;
+}
+
+int  hanoi(int n, char x, char y, char z) {
+		if (n==1){
+			move(n, x, z);
+			return 1;
+		}
+		else {
+			hanoi((n - 1), x,z,y);
+			move(n, x, z);
+			hanoi((n - 1), y, x,z);
+			return hanoi((n - 1),' ',' ',' ') * 2 + 1;
+		}
+}
+
+int main() {
+	int n;
+	int count;
+	while (scanf_s("%d",&n)!=EOF){
+		count=hanoi(n, 'X', 'Y', 'Z');
+		printf_s("%d", count);
+	}
+	return 0;
+
+}
+*/
+
+//队列 基础操作
+/*
+#include <iostream>
+#include <cstdio>
+#include <queue>
+
+using namespace std;
+
+queue<int> myQueue;
+
+int main() {
+
+		for (int i = 0; i < 10; i++) {
+			myQueue.push(i); //将数值依次入队
+		}
+
+		int sum = 0;
+		while (!myQueue.empty()) {
+			sum += myQueue.front();//fornt是队首
+			myQueue.pop();
+		}
+
+		printf_s("%d\n", sum);
+		
+	
+	return 0;
+}
+*/
+//队列 猫狗收容所，题目见：
+/*
+#include <iostream>
+#include <cstdio>
+#include <queue>
+
+using namespace  std;
+
+struct animal{
+	int num;//何种类型，是进队还是出队
+	int order;//进队的次序
+	animal(int n, int o) :num(n), order(o) {}
+};
+
+queue<animal> Dogs;
+queue<animal> Cats;
+
+void clear(queue<animal>& q) { //队列清空的函数 
+	queue<animal> empty;
+	swap(empty, q);
+}
+
+int main() {
+	int n;
+	int method;
+	int type;
+	int order = 0;
+	while (scanf_s("%d",&n)!=EOF){
+
+		clear(Dogs);
+		clear(Cats);
+		//Dogs = queue<animal>{};清空队列的另一种方式
+		//Cats = queue<animal>{};
+
+		for (int i = 0; i <n; i++){
+			scanf_s("%d%d", &method, &type);
+			if (method==1){
+				if (type>0){
+					Dogs.push(animal(type, order++));
+				}
+				else Cats.push(animal(type, order++));
+			}
+			else {
+				if (type==0&&!Dogs.empty()&&!Cats.empty()){
+					if (Dogs.front().order<Cats.front().order){
+						printf_s("%d", Dogs.front().num);
+						Dogs.pop();
+					}
+					else {
+						printf_s("%d", Cats.front().num);
+						Cats.pop();
+					}
+
+				}
+				else if (type == 0 && Dogs.empty() && !Cats.empty()) {
+					printf_s("%d", Cats.front().num);
+					Cats.pop();
+
+				}
+				else if (type == 0 && !Dogs.empty() && Cats.empty()) {
+					printf_s("%d", Dogs.front().num);
+					Dogs.pop();
+				}
+				else if (type==1&&!Dogs.empty())
+				{
+					printf_s("%d", Dogs.front().num);
+					Dogs.pop();
+				}
+				else if (type==-1&&!Cats.empty())
+				{
+					printf_s("%d", Cats.front().num);
+					Cats.pop();
+				}
+
+			}
+
+		}
+
+		printf_s("\n");
+
+	}
+	return 0;
+}
+*/
+
+//栈 数字逆序
+/*
+#include <iostream>
+#include <cstdio>
+#include <stack>
+
+using namespace std;
+
+void clear(stack<long long>& q) {
+	stack<long long> empty;
+	swap(empty, q);
+}
+
+
+stack<long long>myStack;
+
+int main() {
+	int n;
+	long long num;
+	while (scanf_s("%d",&n)!=EOF){
+		clear(myStack);
+		//myStack = stack<long long>{};
+		for (int i=0;i<n;i++){
+		cin >> num;//scanf_s("%lld", &num);
+			myStack.push(num);
+		}
+
+		while (!myStack.empty()){
+			printf_s("lld", myStack.top());
+			myStack.pop();
+		}
+		printf_s("\n");
+
+	}
+
+	return 0;
+}
+*/
+
+// 栈 括号匹配
+/*
+#include <iostream>
+#include <cstdio>
+#include <string>
+#include <stack>
+
+using namespace std;
+
+stack<int> myStack;
+
+int main() {
+	string str;
+	
+	while (cin>>str){
+		myStack= stack<int>{};
+		string answer(str.size(), ' ');
+		for (int i=0;i<str.size();i++){
+			if (str[i]=='('){
+				myStack.push(i);
+			}
+			else if (str[i] == ')') {
+			if (!myStack.empty()){
+				myStack.pop();
+			}
+			else answer[i] = '?';
+			}	
+		}
+
+		while (!myStack.empty()){
+			answer[myStack.top()] = '$'; 
+			myStack.pop();
+		}
+
+		cout << str << endl;
+		cout << answer << endl;
+	}
+	return 0;
+}
+*/
+
+//栈 计算器
+/*
+#include <iostream>
+#include <cstdio>
+#include <string>
+#include <stack>
+#include <locale> //isdigit的头文件，现在也可以不加这个
+
+using namespace std;
+
+
+double getnum(string str,int& i) {
+	double num = 0;
+	while (isdigit(str[i])){
+		num = num * 10 + (str[i]-'0');
+		i++;
+	}
+	return num;
+}
+
+
+int Priority(char c) {
+	if (c=='#'){
+		return 0;
+	}
+	else if (c=='$'){
+		return 1;
+	}
+	else if (c=='+'||c=='-'){
+		return 2;
+	}
+	else return 3;
+}
+
+double Caculate(double x,double y,char c){
+	double reslut = 0;
+	if (c=='+'){
+		reslut = x + y;
+	}
+	else if (c=='-')
+	{
+		reslut = x - y;
+	}
+	else if (c=='*')
+	{
+		reslut = x * y;
+	}
+	else if (c=='/')
+	{
+		reslut = x / y;
+	}
+	  
+	return reslut;
+		
+}
+
+
+
+int main() {
+	string str;
+	while (getline(cin,str))
+	{
+		if (str=="0")
+		{
+			break;
+		}
+		
+		stack<char> opStack; //运算符栈
+		stack<double> numStack; //数字栈
+		opStack.push('#');
+		str += '$';
+		for (int i=0;i<str.size();i++){
+		
+			if (isdigit(str[i])) {
+				numStack.push(getnum(str, i));
+				i--;
+			}
+			else if (str[i] == ' ') {
+				continue;
+			}
+			else {
+				if (Priority(opStack.top()) < Priority(str[i])) {
+					opStack.push(str[i]);
+					
+				}
+				else {
+					double y = numStack.top();
+					numStack.pop();
+					double x = numStack.top();
+					numStack.pop();
+					double reslut = Caculate(x, y, opStack.top());
+					numStack.push(reslut);
+					opStack.pop();
+					i--;
+				}
+
+			}
+
+		}
+			
+	
+		printf_s("%.2f\n", numStack.top());
+	}
+
+	return 0;
+
+}
+*/
